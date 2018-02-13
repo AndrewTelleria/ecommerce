@@ -4,11 +4,12 @@ from __future__ import unicode_literals
 import random
 import os
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
 
-from .utils import unique_slug_generator
+from ecommerce.utils import unique_slug_generator
 
 
 
@@ -37,6 +38,16 @@ class ProductQuerySet(models.query.QuerySet):
 	def featured(self):
 		return self.filter(featured=True, active=True)
 
+	def search(self, query):
+
+		lookups = (Q(title__icontains=query) | 
+				  Q(description__icontains=query) |
+				  Q(price__icontains=query) |
+				  Q(tag__title__icontains=query)
+				  )
+		# Q(tag__name__icontains=query)
+		# tshirt, t-shirt, t shirt
+		return self.filter(lookups).distinct()
 
 class ProductManager(models.Manager):
 	def get_queryset(self):
@@ -45,7 +56,7 @@ class ProductManager(models.Manager):
 	def all(self):
 		return self.get_queryset().active()
 
-	def features(self):
+	def featured(self):
 		return self.get_queryset().featured()
 
 	def get_by_id(self, id):
@@ -53,6 +64,9 @@ class ProductManager(models.Manager):
 		if qs.count() == 1:
 			return qs.first()
 		return None
+
+	def search(self, query):
+		return self.get_queryset().active().search(query)
 
 
 class Product(models.Model):
@@ -75,6 +89,10 @@ class Product(models.Model):
 		return self.title
 
 	def __unicode__(self):
+		return self.title
+
+	@property
+	def name(self):
 		return self.title
 
 

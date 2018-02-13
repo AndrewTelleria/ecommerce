@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+
+    <style type="text/css">
+  p {
+    height: 300px;
+    width:200px; 
+  }
+
+  </style>
+  </head>
+  <body>
+
+    <div class='container'>
+      <div class='row'>
+        <div class='col'>
+        <h3>Form</h3>
+        <form class='new-content-form' method="POST" action="some/url/link">
+      
+        <textarea name='content' class='form-control'></textarea>
+        <input type="submit" value="Save">
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <div class='formDataSubmitted'>
+      
+    </div>
+
+
+
+    <h1 class="header">Hello, world!</h1>
+    <h1 class="header">Hello, world!</h1>
+    <h1 class="header" id="header3">Hello, world!</h1>
+
+    <p class="description"><a href="abc">Some Link</a></p>
+    <p class="description">Another paragraph</p>
+    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam ante sit amet sapien dapibus, vel vehicula sem vehicula. Proin rhoncus rutrum aliquet. Aliquam vitae magna nisi. Mauris est ipsum, laoreet sed neque id, gravida hendrerit elit. Phasellus lobortis vitae magna at ornare. Donec vehicula porta metus vitae ultrices. Cras nec lacus vulputate, luctus ligula hendrerit, lacinia nibh. Nunc at fermentum lectus. Duis ut ligula id urna fermentum faucibus.
+
+Praesent tempor, enim vel convallis sagittis, quam ligula tristique magna, non pharetra purus enim sed massa. Sed vestibulum, nibh non condimentum sollicitudin, nisl velit placerat risus, aliquet tempor felis lorem ut eros. Vivamus pellentesque libero ac quam elementum tincidunt. Nulla facilisi. Cras sollicitudin lorem vel commodo vulputate. Nam nec sollicitudin quam. In nisi lacus, tincidunt sit amet arcu ut, egestas malesuada erat. Morbi id metus vitae lectus iaculis pharetra quis ac lectus. Quisque in porta erat, at vestibulum mi. Nam dapibus ipsum ut nisi porta, et aliquet urna euismod. Nullam in condimentum leo. Fusce nec odio iaculis, vestibulum mi fermentum, malesuada tellus.
+
+Nulla enim nulla, aliquam vel sem luctus, mattis congue tellus. Ut id lectus nec sapien ultricies rhoncus in at est. Proin ullamcorper quam eu rutrum finibus. Pellentesque diam nisl, mattis ac massa vitae, elementum laoreet augue. Nunc finibus orci vel posuere luctus. Cras feugiat convallis risus sit amet tempor. Aliquam erat volutpat. Ut odio lectus, pretium nec aliquam in, commodo vel erat. Vivamus efficitur dolor nec dolor sollicitudin, a vestibulum sem rhoncus. Morbi semper purus eu tempor accumsan. Sed maximus mi vitae ex ultrices lacinia. In consectetur elementum ipsum, et fringilla leo consectetur at. Maecenas sed tellus sodales, egestas dolor et, sollicitudin lorem. Mauris congue nisl ipsum, viverra dapibus lectus mollis sit amet. Nam nisi magna, iaculis vitae ipsum eu, pharetra lobortis urna. Donec ut sodales mauris.
+
+</p>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<!--     <script type="text/javascript">
+      $(document).ready(function(){
+        var num = 124
+        var someString = "some string"
+        // some_array = [num, 123, 12333, "etc"]
+        var someArray = [num, 123, 12333, "etc"]
+        var someBool = true // true
+
+        $.each(someArray, function(index, obj){
+          console.log(index, obj)
+          if (obj%2 == 0 && someBool) {
+            console.log(obj, " is even")
+          } else if (obj%3==0 && someBool) {
+            console.log(obj, " by 3")
+          } else {
+            console.log(obj, "false or is odd")
+          }
+        })
+
+
+      });
+
+    </script> -->
+
+    <!-- <script type="text/javascript">
+
+      $(document).ready(function(){
+        var $descriptionItems = $(".description")
+
+        $.each($descriptionItems, function(index, obj){
+          var item = $(this)
+          console.log(item)
+          var actualHeight = item[0].scrollHeight
+          var shouldBeHeight = item.height()
+          console.log(actualHeight, shouldBeHeight)
+          if (actualHeight > shouldBeHeight + 50){
+            item.css("overflow-y", "scroll")
+          }
+          // console.log(index, item.height())
+          // console.log(index, obj.height())
+
+        });
+
+        var header3 = $("#header3")
+        header3.click(function(event){
+          var $this = $(this)
+          console.log($this)
+          console.log(event)
+          window.location.href = 'http://google.com'
+        });
+
+        var descriptionLinks = $(".description a")
+        descriptionLinks.click(function(event){
+          console.log(event)
+          event.preventDefault()
+          var $this = $(this)
+          var href = $this.attr("href")
+          console.log(href)
+          alert(href)
+          window.location.href = href
+        });
+
+      });
+
+    </script> -->
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    var contentForm = $(".new-content-form")
+    contentForm.submit(function(event){
+      event.preventDefault()
+      var $this = $(this)
+      // console.log(contentForm.serialize())
+      var textAreaContent = $(this).find('textarea')
+      // console.log(textAreaContent.val())
+      // console.log(textAreaContent.attr('name'))
+      var formMethod = $(this).attr("method") // contentForm.attr("method")
+      var formAction = $(this).attr("action")
+      var data = {
+        "content": textAreaContent.val(),
+        "method": formMethod,
+        "actoin": formAction
+      }
+
+      $('.formDataSubmitted').text(textAreaContent.val() + " method is " + formMethod)
+
+
+      textAreaContent.val("")
+
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
