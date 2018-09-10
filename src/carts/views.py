@@ -52,7 +52,6 @@ def cart_update(request):
 			cart_obj.products.add(product_obj)
 			added = True
 		request.session['cart_items'] = cart_obj.products.count()
-		# return redirect(product_obj.get_absolute_url())
 		if request.is_ajax():
 			print("Ajax request")
 			json_data = {
@@ -60,7 +59,7 @@ def cart_update(request):
 				"removed": not added,
 				"count": cart_obj.products.count(),
 			}
-			return JsonResponse(json_data)
+			return JsonResponse(json_data, status=200)
 	return redirect("cart:home")
 
 def checkout_home(request):

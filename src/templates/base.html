@@ -19,6 +19,102 @@
       {% include 'base/js.html' %}
       <script type="text/javascript">
         $(document).ready(function(){
+          
+          // Contact form handler
+          var contactForm = $(".contact-form")
+          var contactFormMethod = contactForm.attr("method")
+          var contactFormEndpoint = contactForm.attr("action")
+          
+
+          function displaySubmitting(submitBtn, defaultText, doSubmit){
+            if (doSubmit){
+              submitBtn.addClass("disabled")
+              submitBtn.html("<i class='fa fa-spin fa-spinner'></i> Sending..")
+            } else {
+              submitBtn.removeClass("disabled")
+              submitBtn.html(defaultText)
+            }         
+          };
+
+          contactForm.submit(function(event){
+            event.preventDefault();
+            var contactFormSubmitBtn  = contactForm.find("[type='submit']")
+            var contactFormSubmitBtnTxt = contactFormSubmitBtn.text()            
+            var contactFormData = contactForm.serialize();
+            displaySubmitting(contactFormSubmitBtn, "",true)
+            $.ajax({
+              method: contactFormMethod,
+              url: contactFormEndpoint,
+              data: contactFormData,
+              success: function(data){
+                contactForm[0].reset()
+                $.alert({
+                  title: "Success!",
+                  content: data.message,
+                  theme: "dark",
+                });
+                setTimeout(function(){
+                  displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false)
+                }, 2000);
+              },
+              error: function(error){
+                console.log(error.responseJSON);
+                var jsonData = error.responseJSON;
+                var msg = ""
+
+                $.each(jsonData, function(key, value){
+                  msg += key + ": " + value[0].message
+                });
+
+                $.alert({
+                  title: "oops!",
+                  content: msg,
+                  theme: "dark",
+                });
+
+                setTimeout(function(){
+                  displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false)
+                }, 1000);
+              }
+            });
+          });
+
+
+          // Auto Search 
+          var searchForm = $(".search-form")
+          var searchInput = searchForm.find("[name='q']") // input name='q'
+          var typingTimer;
+          var typingInterval = 500 // .5 seconds
+          var searchBtn = searchForm.find("[type='submit']")
+
+          searchInput.keyup(function(event){
+            // key released
+            clearTimeout(typingTimer)
+            typingTimer = setTimeout(performSearch, typingInterval)
+          });
+
+
+          searchInput.keydown(function(event){
+            // key pressed
+            clearTimeout(typingTimer)
+          });
+
+          function displaySearching(){
+            searchBtn.addClass("disabled")
+            searchBtn.html("<i class='fa fa-spin fa-spinner'></i> Searching..")
+          };
+
+          function performSearch(){
+            displaySearching()
+            var query = searchInput.val()
+            setTimeout(function(){
+              window.location.href='/search/?q=' + query
+            }, 1000);
+          };
+
+
+          // Cart + Add products
+
           var productForm = $(".form-product-ajax")
 
           productForm.submit(function(event){
@@ -49,8 +145,11 @@
                 }
               },
               error: function(errorData){
-                console.log("error")
-                console.log(errorData)
+                $.alert({
+                  title: "oops!",
+                  content: "An error occured.",
+                  theme: "dark",
+                });
               }
             });
 
@@ -92,11 +191,14 @@
                 }
               },
               error: function(errorData){
-                console.log("error")
-                console.log(errorData)
+                $.alert({
+                  title: "oops!",
+                  content: "An error occured.",
+                  theme: "dark",
+                });
               }
-            })
-          }
+            });
+          };
 
 
 
